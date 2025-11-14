@@ -22,14 +22,29 @@
   </head>
   <body>
     <div class="app-container">
-      <aside id="sidebar">
+      <aside id="sidebar" role="navigation" aria-label="Notes sidebar">
         <div class="sidebar-header">
           <h2>My Notes</h2>
-          <button id="clearAllButton" class="sidebar-action-button" title="Delete all notes">
-            <i class="fas fa-trash-alt"></i>
-          </button>
+          <div class="sidebar-actions">
+            <button id="exportAllButton" class="sidebar-action-button" title="Export all notes" aria-label="Export all notes">
+              <i class="fas fa-download"></i>
+            </button>
+            <button id="clearAllButton" class="sidebar-action-button" title="Delete all notes" aria-label="Delete all notes">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
-        <ul id="notesList" class="notes-list">
+        <div class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search notes..."
+            aria-label="Search notes"
+          />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+        <ul id="notesList" class="notes-list" role="list">
           <!-- Notes will be dynamically inserted here -->
         </ul>
       </aside>
@@ -38,16 +53,24 @@
         <div class="main-content">
           <div class="note-area">
             <div class="note-header">
-               <button id="sidebarToggleButton" class="sidebar-toggle-button" title="Toggle Notes Sidebar">
+               <button id="sidebarToggleButton" class="sidebar-toggle-button" title="Toggle Notes Sidebar" aria-label="Toggle sidebar" aria-expanded="false">
                 <i class="fas fa-bars"></i>
               </button>
-              <div class="editor-title" contenteditable="true" placeholder="Untitled Note">
+              <div class="editor-title" contenteditable="true" placeholder="Untitled Note" role="textbox" aria-label="Note title">
                 Untitled Note
               </div>
+              <div class="note-actions">
+                <button id="statsButton" class="note-action-btn" title="Statistics" aria-label="Show statistics">
+                  <i class="fas fa-chart-bar"></i>
+                </button>
+                <button id="exportButton" class="note-action-btn" title="Export note" aria-label="Export current note">
+                  <i class="fas fa-file-export"></i>
+                </button>
+              </div>
               <div class="tab-navigation-container">
-                <div class="tab-navigation">
-                  <button class="tab-button active" data-tab="note">Polished</button>
-                  <button class="tab-button" data-tab="raw">Raw</button>
+                <div class="tab-navigation" role="tablist" aria-label="Note view tabs">
+                  <button class="tab-button active" data-tab="note" role="tab" aria-selected="true" aria-controls="polishedNote">Polished</button>
+                  <button class="tab-button" data-tab="raw" role="tab" aria-selected="false" aria-controls="rawTranscription">Raw</button>
                   <div class="active-tab-indicator"></div>
                 </div>
               </div>
@@ -59,12 +82,17 @@
                 class="note-content active"
                 contenteditable="true"
                 placeholder="Your polished notes will appear here..."
+                role="tabpanel"
+                aria-label="Polished note content"
               ></div>
               <div
                 id="rawTranscription"
                 class="note-content"
                 contenteditable="true"
                 placeholder="Raw transcription will appear here..."
+                role="tabpanel"
+                aria-label="Raw transcription content"
+                aria-hidden="true"
               ></div>
             </div>
           </div>
@@ -82,30 +110,30 @@
               <span id="recordingStatus" class="status-text">Ready to record</span>
             </div>
 
-            <div class="recording-controls">
-              <button class="action-button" id="newButton" title="New Note / Clear">
+            <div class="recording-controls" role="toolbar" aria-label="Recording controls">
+              <button class="action-button" id="newButton" title="New Note / Clear" aria-label="Create new note">
                 <i class="fas fa-file"></i>
               </button>
-              <button class="action-button" id="uploadButton" title="Upload Audio File">
+              <button class="action-button" id="uploadButton" title="Upload Audio File" aria-label="Upload audio file">
                 <i class="fas fa-upload"></i>
               </button>
-              
-              <button id="recordButton" class="record-button" title="Start/Stop Recording">
+
+              <button id="recordButton" class="record-button" title="Start/Stop Recording" aria-label="Start or stop recording" aria-pressed="false">
                 <div class="record-button-inner">
                   <i class="fas fa-microphone"></i>
                 </div>
-                <svg class="record-waves" viewBox="0 0 200 200">
+                <svg class="record-waves" viewBox="0 0 200 200" aria-hidden="true">
                   <circle class="wave wave1" cx="100" cy="100" r="40" />
                   <circle class="wave wave2" cx="100" cy="100" r="70" />
                   <circle class="wave wave3" cx="100" cy="100" r="100" />
                 </svg>
                 <span class="record-text">Record</span>
               </button>
-              
-              <button class="action-button" id="themeToggleButton" title="Toggle Theme">
+
+              <button class="action-button" id="themeToggleButton" title="Toggle Theme" aria-label="Toggle dark/light theme">
                 <i class="fas fa-sun"></i>
               </button>
-              <div class="action-button" style="visibility: hidden;"></div>
+              <div class="action-button" style="visibility: hidden;" aria-hidden="true"></div>
             </div>
           </div>
           <input type="file" id="audioUpload" accept=".mp3,.m4a,.opus,.ogg,audio/mpeg,audio/mp4,audio/ogg,audio/opus" style="display: none;" multiple />
